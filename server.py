@@ -5,7 +5,7 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 
 @app.route("/postStart/", methods=['GET', 'POST'])
 def post_start():
-   print("deneme")
+   print("test")
    return "start"
     
 
