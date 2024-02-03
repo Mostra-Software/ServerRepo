@@ -1,11 +1,11 @@
-from flask import Flask
+from flask import Flask, request
 import subprocess
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
 @app.route("/postStart/", methods=['GET', 'POST'])
 def post_start():
-   print("test")
+   print("start")
    return "start"
     
 
@@ -19,7 +19,25 @@ def post_redLight():
     # Python dosyasını çalıştırmak için subprocess kullanımı
     try:
         subprocess.run(["python", "C:/Users/berka/Desktop/Server/deneme.py"])
-        return "redLight"
+        return "redLight python file worked"
+    except Exception as e:
+        print("Error:", str(e))
+        return "Error"
+    
+@app.route("/postgreenLight/", methods=['GET', 'POST'])
+def post_greenLight():
+    return "Green Light"
+
+@app.route("/postCoordinates/", methods=['POST'])
+def post_sendCoordinates():
+    try:
+        data = request.json
+        coordinates = data.get('coordinates')
+        print("Received coordinates:", coordinates)
+        coordinates_list = coordinates.split()
+        print("Received coordinates:", coordinates_list)
+        print(len(coordinates_list))
+        return "Coordinates received"
     except Exception as e:
         print("Error:", str(e))
         return "Error"
