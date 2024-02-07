@@ -1,16 +1,29 @@
 from flask import Flask, request
 import subprocess
+import json
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
 @app.route("/postStart/", methods=['GET', 'POST'])
 def post_start():
-   print("start")
-   return "start"
+    #START 
+    #Main dosyasını çalıştırmak
+    try:
+        #subprocess.Popen("C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Python 3.12.exe C:/Users/berka/Desktop/Server/deneme.py", shell=True)
+        ##Burada python 3.7 nin bilgisayarda kurulu oldugu dizin gereklidir.
+       
+        subprocess.run(["python", "C:/Users/berka/Desktop/Server/deneme.py"])
+        return "python file worked"
+    except Exception as e:
+        print("Error:", str(e))
+        return "Error"
     
 
 @app.route("/postStop/", methods=['GET', 'POST'])
 def post_stop():
+    with open('stop.txt', 'w') as f:
+        f.write("Stop")  # Koordinatları dosyaya yaz
+    ##STOP  ###TXT File 
     return "Stop"
 
 @app.route("/postredLight/", methods=['GET', 'POST'])
@@ -28,16 +41,21 @@ def post_redLight():
 def post_greenLight():
     return "Green Light"
 
-@app.route("/postCoordinates/", methods=['POST'])
+@app.route("/postCoordinates/", methods=['GET','POST'])
 def post_sendCoordinates():
     try:
         data = request.json
+        #print(data)
         coordinates = data.get('coordinates')
         print("Received coordinates:", coordinates)
         coordinates_list = coordinates.split()
-        print("Received coordinates:", coordinates_list)
-        print(len(coordinates_list))
-        return "Coordinates received"
+        #print("Received coordinates:", coordinates_list)
+        #with open('coordinates.txt', 'w') as f:
+        #    f.write(coordinates)  # Koordinatları dosyaya yaz
+
+        json_veri = json.dumps(coordinates_list)
+
+        return json_veri
     except Exception as e:
         print("Error:", str(e))
         return "Error"
