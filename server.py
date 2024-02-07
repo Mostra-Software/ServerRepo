@@ -28,14 +28,8 @@ def post_stop():
 
 @app.route("/postredLight/", methods=['GET', 'POST'])
 def post_redLight():
+    return "Red Light"
 
-    # Python dosyasını çalıştırmak için subprocess kullanımı
-    try:
-        subprocess.run(["python", "C:/Users/berka/Desktop/Server/deneme.py"])
-        return "redLight python file worked"
-    except Exception as e:
-        print("Error:", str(e))
-        return "Error"
     
 @app.route("/postgreenLight/", methods=['GET', 'POST'])
 def post_greenLight():
@@ -45,17 +39,18 @@ def post_greenLight():
 def post_sendCoordinates():
     try:
         data = request.json
-        #print(data)
         coordinates = data.get('coordinates')
+
         print("Received coordinates:", coordinates)
         coordinates_list = coordinates.split()
+
         #print("Received coordinates:", coordinates_list)
-        #with open('coordinates.txt', 'w') as f:
-        #    f.write(coordinates)  # Koordinatları dosyaya yaz
+        with open('coordinates.txt', 'w') as f:
+            f.write(coordinates)  # Koordinatları dosyaya yaz
 
-        json_veri = json.dumps(coordinates_list)
+        #json_veri = json.dumps(coordinates_list)
 
-        return json_veri
+        return data
     except Exception as e:
         print("Error:", str(e))
         return "Error"
