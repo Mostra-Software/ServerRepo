@@ -9,10 +9,10 @@ def post_start():
     #START 
     #Main dosyasını çalıştırmak
     try:
-        #subprocess.Popen("C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Python 3.12.exe C:/Users/berka/Desktop/Server/deneme.py", shell=True)
+        subprocess.Popen("py -3.7 main.py", shell=True)
         ##Burada python 3.7 nin bilgisayarda kurulu oldugu dizin gereklidir.
        
-        subprocess.run(["python", "C:/Users/berka/Desktop/Server/deneme.py"])
+        #subprocess.run(["python", "C:/Users/egezt/OneDrive/Masaüstü/Mostra Klasör/WindowsNoEditor/PythonAPI/ControllerTest/main.py"])
         return "python file worked"
     except Exception as e:
         print("Error:", str(e))
@@ -21,7 +21,7 @@ def post_start():
 
 @app.route("/postStop/", methods=['GET', 'POST'])
 def post_stop():
-    with open('stop.txt', 'w') as f:
+    with open('coordinates.txt', 'w') as f:
         f.write("Stop")  # Koordinatları dosyaya yaz
     ##STOP  ###TXT File 
     return "Stop"
